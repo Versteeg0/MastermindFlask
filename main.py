@@ -15,3 +15,14 @@ def start_page():
         return render_template('user.html', name=username)
     else:
         return render_template('start.html')
+
+
+@app.route('/leaderboard/<username>', methods=['POST'])
+def leaderboard(username):
+    if request.method == 'POST':
+        db = Database()
+        username = request.form['username']
+        user = db.get_user(username)
+        if user is None:
+            return render_template('usernotfound.html', name=username)
+        return render_template('leaderboard.html', name=user[0])
