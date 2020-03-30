@@ -2,4 +2,22 @@
 {% block title %}Overzicht{% endblock %}
 {% block content %}
     <p>Hallo, {{ name }}. Welkom bij Mastermind</p>
+
+    <p>Begin een nieuwe game: </p>
+    <form method="post" action="/startgame/">
+        <p><input type="text" name="username" value="{{ name }}" disabled="true"></p>
+        <p>Aantal posities:</p>
+        <select name="amount_of_boxes">
+            <option>4</option>
+            <option>6</option>
+        </select>
+        <p>Dubbele kleuren</p>
+        <input type="checkbox" name="multiple_colors">
+        <p>Aantal kleuren:</p>
+        <select name="amount_of_boxes">
+            <option>6</option>
+            <option>10</option>
+        </select>
+        <p><input type="submit" value="Starten"></p>
+    </form>
 {% endblock %}
