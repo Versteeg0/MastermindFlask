@@ -1,18 +1,53 @@
 body {
   text-align: center;
 }
+main {
+    height: 90vh;
+}
 
 .topside {
-    position: fixed;
+    margin: auto;
     Border: 1px solid black;
-    min-width 800px;
-    min-height 1200px;
+    Border-radius: 10px;
+    min-width: 40vh;
+    max-width: 40vh;
+    min-height: 60vh;
 }
 
 .bottomside {
+    margin: auto;
+    Border: 1px solid black;
+    Border-radius: 10px;
+    min-width: 40vh;
+    max-width: 40vh;
+    min-height: 20vh;
+}
+
+.top_answers {
     position: fixed;
-    Border: 3px solid black;
-    border-radius 10px;
-    min-width 30%;
-    min-height 20%;
+    min-width: 25vh;
+    min-height: 4vh;
+    top: 6%;
+    Border: 1px solid red;
+    Border-radius: 10px;
+}
+
+.play_field {
+    position: fixed;
+    min-width: 25vh;
+    min-height: 56vh;
+    top: 10%;
+    Border: 1px solid red;
+    Border-radius: 10px;
+}
+
+.right_play_check {
+    position: fixed;
+    left: 52.7%;
+    top: 10%;
+    min-width: 14.5vh;
+    min-height: 56vh;
+
+    Border: 1px solid green;
+    Border-radius: 10px;
 }
