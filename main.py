@@ -9,7 +9,7 @@ db.create_tables()
 
 
 @app.route('/', methods=['GET', 'POST'])
-def startPage():
+def start_page():
     if request.method == 'POST':
         username = request.form['username']
         return render_template('user.html', name=username)
