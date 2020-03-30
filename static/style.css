@@ -1,3 +1,18 @@
 body {
   text-align: center;
 }
+
+.topside {
+    position: fixed;
+    Border: 1px solid black;
+    min-width 800px;
+    min-height 1200px;
+}
+
+.bottomside {
+    position: fixed;
+    Border: 3px solid black;
+    border-radius 10px;
+    min-width 30%;
+    min-height 20%;
+}

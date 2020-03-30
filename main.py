@@ -15,3 +15,14 @@ def start_page():
         return render_template('user.html', name=username)
     else:
         return render_template('start.html')
+
+
+@app.route('/startgame/', methods=['GET', 'POST'])
+def game():
+    amount_of_boxes = request.form['amount_of_boxes']
+    print(amount_of_boxes)
+    if request.method == 'POST':
+        if amount_of_boxes == '4':
+            return render_template('gamefour.html')
+        else:
+            return render_template('gamesix.html')
