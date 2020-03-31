@@ -2,4 +2,15 @@
 {% block title %}Scores{% endblock %}
 {% block content %}
     <p>Naam: {{ name }}</p>
+    <p>Aantal keer gespeeld: {{ times_played }}</p>
+
+<table border="1" class="center">
+    <tr><th>Datum</th><th>Aantal keren geraden</th>
+    {% for row in scores %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.guesses }}</td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}
