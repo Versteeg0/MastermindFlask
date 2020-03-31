@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, request, Response, g, redirect, url_for, abort, render_template, flash, \
     make_response
 
@@ -21,8 +23,13 @@ def start_page():
 def leaderboard(username):
     if request.method == 'POST':
         db = Database()
-        username = request.form['username']
         user = db.get_user(username)
         if user is None:
             return render_template('usernotfound.html', name=username)
-        return render_template('leaderboard.html', name=user[0])
+        result = db.get_scores(username)
+        scores = []
+        for row in result:
+            scores.append(
+                {'date': datetime.datetime.strptime(row[0], '%Y-%m-%d').strftime('%d-%m-%Y'), 'guesses': row[1]})
+        print(scores)
+        return render_template('leaderboard.html', name=user[0], scores=scores, times_played=len(scores))

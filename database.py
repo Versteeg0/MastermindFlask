@@ -8,8 +8,9 @@ class Database:
         self.cursor = self.connection.cursor()
 
     def test_data(self):
-        self.cursor.execute("INSERT INTO leaderboard(username, times_guessed) VALUES (?, ?)",
-                            ("ricobender", 5,))
+        now = datetime.datetime.today().date()
+        self.cursor.execute("INSERT INTO leaderboard(username, date, times_guessed) VALUES (?, ?, ?)",
+                            ("ricobender", now, 5,))
         self.connection.commit()
 
     def create_tables(self):
@@ -28,8 +29,19 @@ class Database:
         return self.cursor.fetchone()
 
     def get_scores(self, username):
-        self.cursor.execute("SELECT username FROM leaderboard WHERE username = ?", (username,))
-        return self.cursor.fetchone()
+        self.cursor.execute("SELECT date, times_guessed FROM leaderboard WHERE username = ?", (username,))
+        return self.cursor.fetchall()
 
-    def close_connection(self):
-        self.connection.close()
+    # def run_query(self, query, bindings=None):
+    #     curs = self.connection.cursor()
+    #     if bindings:
+    #         curs.execute(query, bindings)
+    #     else:
+    #         curs.execute(query)
+    #
+    #     while True:
+    #         row = curs.fetchone()
+    #         if not row:
+    #             return None
+    #         yield row
+
