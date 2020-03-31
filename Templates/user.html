@@ -20,4 +20,8 @@
         </select>
         <p><input type="submit" value="Starten"></p>
     </form>
+    <form method="post" action="/leaderboard/{{ name }}">
+        <input type="hidden" name="username" value="{{ name }}">
+        <input type="submit" value="Scores">
+    </form>
 {% endblock %}

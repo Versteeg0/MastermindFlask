@@ -1,3 +1,4 @@
+import datetime
 import sqlite3 as db
 
 
@@ -6,9 +7,15 @@ class Database:
         self.connection = db.connect('mastermind.db')
         self.cursor = self.connection.cursor()
 
+    def test_data(self):
+        now = datetime.datetime.today().date()
+        self.cursor.execute("INSERT INTO leaderboard(username, date, times_guessed) VALUES (?, ?, ?)",
+                            ("ricobender", now, 5,))
+        self.connection.commit()
+
     def create_tables(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS leaderboard
-                            ([id] INTEGER PRIMARY KEY,[username] VARCHAR, 
+                            ([id] INTEGER PRIMARY KEY,[username] text, 
                             [date] date, [times_guessed] integer)''')
         self.connection.commit()
 
@@ -17,9 +24,24 @@ class Database:
                             (username, date, times_guessed,))
         self.connection.commit()
 
-    def get_username(self, username):
+    def get_user(self, username):
         self.cursor.execute("SELECT username FROM leaderboard WHERE username = ?", (username,))
         return self.cursor.fetchone()
 
-    def close_connection(self):
-        self.connection.close()
+    def get_scores(self, username):
+        self.cursor.execute("SELECT date, times_guessed FROM leaderboard WHERE username = ?", (username,))
+        return self.cursor.fetchall()
+
+    # def run_query(self, query, bindings=None):
+    #     curs = self.connection.cursor()
+    #     if bindings:
+    #         curs.execute(query, bindings)
+    #     else:
+    #         curs.execute(query)
+    #
+    #     while True:
+    #         row = curs.fetchone()
+    #         if not row:
+    #             return None
+    #         yield row
+
