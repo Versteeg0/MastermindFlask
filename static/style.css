@@ -1,6 +1,73 @@
 body {
   text-align: center;
 }
+main {
+    height: 90vh;
+}
+
+.topside {
+    margin: auto;
+    Border: 1px solid black;
+    Border-radius: 10px;
+    min-width: 40vh;
+    max-width: 40vh;
+    min-height: 60vh;
+}
+
+.topside table {
+    table-layout:fixed;
+    width: 100%;
+}
+.topside table td input {
+    width: 60px;
+}
+
+.topside table td{
+    width: 79px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.bottomside {
+    margin: auto;
+    Border: 1px solid black;
+    Border-radius: 10px;
+    min-width: 40vh;
+    max-width: 40vh;
+    min-height: 20vh;
+}
+
+.topside6 {
+    margin: auto;
+    Border: 1px solid black;
+    Border-radius: 10px;
+    min-width: 60vh;
+    max-width: 60vh;
+    min-height: 60vh;
+}
+
+.topside6 table {
+    table-layout:fixed;
+    width: 100%;
+}
+.topside6 table td input {
+    width: 60px;
+}
+
+.topside6 table td{
+    width: 80px;
+    height: 40px;
+    border: 1px solid black;
+}
+.bottomside6 {
+    margin: auto;
+    Border: 1px solid black;
+    Border-radius: 10px;
+    min-width: 60vh;
+    max-width: 60vh;
+    min-height: 20vh;
+}
+
 
 table{
  margin: 0 auto;

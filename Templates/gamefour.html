@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block title %}Mastermind 4 digits{% endblock %}
+{% block content %}
+            <div class="topside">
+                <table width="100px">
+                    {% for row in guesses %}
+                        <tr>
+                            {% for value in guesses[row] %}
+                                <td bgcolor="{{ value }}">{{ value }}</td>
+                            {% endfor %}
+                            {% for c in checklist[row] %}
+                                <td class="check" bgcolor="{{ c }}">{{ c }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                    {% endfor %}
+                      <form method="post" action="/guess/">
+                          <input type="hidden" name="username" value="{{ name }}">
+                          <select name="first">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="second">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="third">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="fourth">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                         <input type="submit" value="Raad!">
+                      </form>
+                    </tr>
+                </table>
+            </div>
+            <div class="bottomside">
+                <h3>Informatie</h3>
+                <p> Gebruikersnaam: {{ name }} </p>
+                 <p> code:
+                {% for c in code %}
+                  {{ c }}
+                {% endfor %}
+                </p>
+            </div>
+{% endblock %}
