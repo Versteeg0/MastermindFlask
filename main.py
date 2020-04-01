@@ -15,7 +15,10 @@ current_game = Game()
 def start_page():
     if request.method == 'POST':
         username = request.form['username']
-        return render_template('user.html', name=username)
+        if request.form['username'] != '':
+            return render_template('user.html', name=username)
+        else:
+            return render_template('start.html', error="Geef een geldige naam in")
     else:
         return render_template('start.html')
 
@@ -40,18 +43,22 @@ def start():
     amount_of_boxes = request.form['amount_of_boxes']
     amount_of_colors = request.form['amount_of_colors']
     multiple_colors = request.form['multiple_colors']
+    godmode = request.form['toggle_godmode']
     username = request.form['username']
     current_game.setColorAmount(int(amount_of_colors))
     current_game.setBoxAmount(int(amount_of_boxes))
     current_game.createCode(multiple_colors)
+    current_game.setGodmode(godmode)
     code = current_game.getCode()
     if request.method == 'POST':
         if amount_of_boxes == '4':
             return render_template('gamefour.html', guesses=current_game.getGuesses(),
-                                   name=username, colors=current_game.getColors(), code=code)
+                                   name=username, colors=current_game.getColors(), code=code,
+                                   godmode=current_game.godmode)
         else:
             return render_template('gamesix.html', guesses=current_game.getGuesses(),
-                                   name=username, colors=current_game.getColors(), code=code)
+                                   name=username, colors=current_game.getColors(), code=code,
+                                   godmode=current_game.godmode)
     else:
         return render_template('start.html')
 
@@ -79,7 +86,9 @@ def guess():
             checklist = current_game.addCheck(check[0], check[1])
             if current_game.getBoxAmount() == 4:
                 return render_template('gamefour.html', guesses=current_game.getGuesses(),
-                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code)
+                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code,
+                                       godmode=current_game.godmode)
             else:
                 return render_template('gamesix.html', guesses=current_game.getGuesses(),
-                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code)
+                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code,
+                                       godmode=current_game.godmode)

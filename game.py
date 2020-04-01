@@ -11,6 +11,7 @@ class Game:
         self.times_guessed = 0
         self.color_amount = 0
         self.box_amount = 0
+        self.godmode = False
 
     def createCode(self, multiple_colors):
         self.code.clear()
@@ -57,6 +58,12 @@ class Game:
     def setBoxAmount(self, amount):
         self.box_amount = amount
 
+    def setGodmode(self, godmode):
+        if godmode == 'Ja':
+            self.godmode = True
+        else:
+            self.godmode = False
+
     def checkCode(self, guess):
         correct = 0
         in_code = 0
@@ -91,6 +98,9 @@ class Game:
         for i in range(self.color_amount):
             colors.append(self.colors[i])
         return colors
+
+    def getGodmode(self):
+        return self.godmode
 
     def createColorArray(self):
         self.colors.append("red")
