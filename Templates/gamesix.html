@@ -1,21 +1,63 @@
 {% extends "layout.html" %}
 {% block title %}Mastermind 6 digits{% endblock %}
 {% block content %}
-            <div class="topside">
-                <div class="top_answers">
-
-                </div>
-
-                <div class="play_field">
-
-                </div>
-
-                <div class="right_play_check">
-
-                </div>
+            <div class="topside6">
+                <table>
+                    {% for row in guesses %}
+                        <tr>
+                            {% for value in guesses[row] %}
+                                <td bgcolor="{{ value }}">{{ value }}</td>
+                            {% endfor %}
+                            {% for c in checklist[row] %}
+                                <td class="check" bgcolor="{{ c }}">{{ c }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                    {% endfor %}
+                      <form method="post" action="/guess/">
+                          <input type="hidden" name="username" value="{{ name }}">
+                          <select name="first">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="second">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="third">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="fourth">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="fifth">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                          <select name="sixth">
+                            {% for c in colors %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                          </select>
+                         <input type="submit" value="Raad!">
+                      </form>
+                    </tr>
+                </table>
             </div>
-
-            <div class="bottomside">
-                <h1>Controls</h1>
+            <div class="bottomside6">
+                <h3>Informatie</h3>
+                <p>Gebruikersnaam: {{ name }}</p>
+                 <p> code:
+                {% for c in code %}
+                  {{ c }}
+                {% endfor %}
+                </p>
             </div>
 {% endblock %}

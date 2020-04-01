@@ -1,13 +1,14 @@
 import datetime
 
-from flask import Flask, render_template, request, Response, g, redirect, url_for, abort, render_template, flash, \
-    make_response
+from flask import Flask, request, render_template
 
 from database import Database
+from game import Game
 
 app = Flask(__name__)
 db = Database()
 db.create_tables()
+current_game = Game()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,16 +32,54 @@ def leaderboard(username):
         for row in result:
             scores.append(
                 {'date': datetime.datetime.strptime(row[0], '%Y-%m-%d').strftime('%d-%m-%Y'), 'guesses': row[1]})
-        print(scores)
         return render_template('leaderboard.html', name=user[0], scores=scores, times_played=len(scores))
 
 
 @app.route('/startgame/', methods=['GET', 'POST'])
-def game():
+def start():
     amount_of_boxes = request.form['amount_of_boxes']
-    print(amount_of_boxes)
+    amount_of_colors = request.form['amount_of_colors']
+    multiple_colors = request.form['multiple_colors']
+    username = request.form['username']
+    current_game.setColorAmount(int(amount_of_colors))
+    current_game.setBoxAmount(int(amount_of_boxes))
+    current_game.createCode(multiple_colors)
+    code = current_game.getCode()
     if request.method == 'POST':
         if amount_of_boxes == '4':
-            return render_template('gamefour.html')
+            return render_template('gamefour.html', guesses=current_game.getGuesses(),
+                                   name=username, colors=current_game.getColors(), code=code)
         else:
-            return render_template('gamesix.html')
+            return render_template('gamesix.html', guesses=current_game.getGuesses(),
+                                   name=username, colors=current_game.getColors(), code=code)
+    else:
+        return render_template('start.html')
+
+
+@app.route('/guess/', methods=['GET', 'POST'])
+def guess():
+    if request.method == 'POST':
+        if current_game.getBoxAmount() == 4:
+            guessed = [request.form['first'], request.form['second'], request.form['third'], request.form['fourth']]
+        else:
+            guessed = [request.form['first'], request.form['second'], request.form['third'], request.form['fourth'],
+                       request.form['fifth'], request.form['sixth']]
+        username = request.form['username']
+        check = current_game.addGuess(guessed)
+        code = current_game.getCode()
+        if current_game.getTimesGuessed() == 10:
+            return render_template('loser.html', code=code, username=username)
+        if check[0] == current_game.getBoxAmount():
+            guesses = current_game.getTimesGuessed()
+            db = Database()
+            now = datetime.datetime.today().date()
+            db.save_user(request.form['username'], now, guesses)
+            return render_template('winner.html', code=code, username=username, guesses=guesses)
+        else:
+            checklist = current_game.addCheck(check[0], check[1])
+            if current_game.getBoxAmount() == 4:
+                return render_template('gamefour.html', guesses=current_game.getGuesses(),
+                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code)
+            else:
+                return render_template('gamesix.html', guesses=current_game.getGuesses(),
+                                       name=username, colors=current_game.getColors(), checklist=checklist, code=code)

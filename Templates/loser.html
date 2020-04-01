@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Verloren{% endblock %}
+{% block content %}
+    <p>Helaas, {{ username }}</p>
+
+    <p>Je hebt het niet kunnen raden in 10 beurten.</p>
+    <p>De code was:</p>
+    <table width="100px">
+        <tr>
+            {% for c in code %}
+                <td class="check" bgcolor="{{ c }}">{{ c }}</td>
+            {% endfor %}
+        </tr>
+    </table>
+{% endblock %}

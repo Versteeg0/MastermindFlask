@@ -5,14 +5,17 @@
 
     <p>Begin een nieuwe game: </p>
     <form method="post" action="/startgame/">
-        <p><input type="text" name="username" value="{{ name }}" disabled="true"></p>
+        <p><input type="hidden" name="username" value="{{ name }}"></p>
         <p>Aantal posities:</p>
         <select name="amount_of_boxes">
             <option>4</option>
             <option>6</option>
         </select>
         <p>Dubbele kleuren</p>
-        <input type="checkbox" name="multiple_colors">
+        <select name="multiple_colors">
+            <option>Ja</option>
+            <option>Nee</option>
+        </select>
         <p>Aantal kleuren:</p>
         <select name="amount_of_colors">
             <option>6</option>

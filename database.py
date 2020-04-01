@@ -20,7 +20,7 @@ class Database:
         self.connection.commit()
 
     def save_user(self, username, date, times_guessed):
-        self.cursor.execute("INSERT INTO leaderboard(username, times_played, times_guessed) VALUES (?, ?, ?)",
+        self.cursor.execute("INSERT INTO leaderboard(username, date, times_guessed) VALUES (?, ?, ?)",
                             (username, date, times_guessed,))
         self.connection.commit()
 
@@ -31,17 +31,3 @@ class Database:
     def get_scores(self, username):
         self.cursor.execute("SELECT date, times_guessed FROM leaderboard WHERE username = ?", (username,))
         return self.cursor.fetchall()
-
-    # def run_query(self, query, bindings=None):
-    #     curs = self.connection.cursor()
-    #     if bindings:
-    #         curs.execute(query, bindings)
-    #     else:
-    #         curs.execute(query)
-    #
-    #     while True:
-    #         row = curs.fetchone()
-    #         if not row:
-    #             return None
-    #         yield row
-
