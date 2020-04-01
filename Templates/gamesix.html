@@ -53,11 +53,13 @@
             </div>
             <div class="bottomside6">
                 <h3>Informatie</h3>
-                <p>Gebruikersnaam: {{ name }}</p>
+                <p> Gebruikersnaam: {{ name }} </p>
+                {% if godmode %}
                  <p> code:
                 {% for c in code %}
                   {{ c }}
                 {% endfor %}
                 </p>
+                {% endif %}
             </div>
 {% endblock %}
