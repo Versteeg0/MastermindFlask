@@ -74,14 +74,14 @@ def guess():
         username = request.form['username']
         check = current_game.addGuess(guessed)
         code = current_game.getCode()
-        if current_game.getTimesGuessed() == 10:
-            return render_template('loser.html', code=code, username=username)
         if check[0] == current_game.getBoxAmount():
             guesses = current_game.getTimesGuessed()
             db = Database()
             now = datetime.datetime.today().date()
             db.save_user(request.form['username'], now, guesses)
             return render_template('winner.html', code=code, username=username, guesses=guesses)
+        if current_game.getTimesGuessed() == 10:
+            return render_template('loser.html', code=code, username=username)
         else:
             checklist = current_game.addCheck(check[0], check[1])
             if current_game.getBoxAmount() == 4:
