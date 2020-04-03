@@ -5,11 +5,16 @@
     <p>Aantal keer gespeeld: {{ times_played }}</p>
 
 <table border="1" class="center">
-    <tr><th>Datum</th><th>Aantal keren geraden</th>
+    <tr><th>Datum</th><th>Aantal keren geraden</th> <th>Cheats</th></tr>
     {% for row in scores %}
         <tr>
             <td>{{ row.date }}</td>
             <td>{{ row.guesses }}</td>
+            {% if row.godmode == 1 %}
+                <td>Er is gecheat</td>
+            {% else %}
+                <td>Er is niet gecheat</td>
+            {% endif %}
         </tr>
     {% endfor %}
 </table>

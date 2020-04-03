@@ -34,7 +34,7 @@ def leaderboard(username):
         scores = []
         for row in result:
             scores.append(
-                {'date': datetime.datetime.strptime(row[0], '%Y-%m-%d').strftime('%d-%m-%Y'), 'guesses': row[1]})
+                {'date': datetime.datetime.strptime(row[0], '%Y-%m-%d').strftime('%d-%m-%Y'), 'guesses': row[1], 'godmode': row[2]})
         return render_template('leaderboard.html', name=user[0], scores=scores, times_played=len(scores))
 
 
@@ -80,7 +80,11 @@ def guess():
             guesses = current_game.getTimesGuessed()
             db = Database()
             now = datetime.datetime.today().date()
-            db.save_user(request.form['username'], now, guesses)
+            if current_game.godmode:
+                godmode = 1
+            else:
+                godmode = 0
+            db.save_user(request.form['username'], now, guesses, godmode)
             return render_template('winner.html', code=code, username=username, guesses=guesses)
         else:
             checklist = current_game.addCheck(check[0], check[1])
